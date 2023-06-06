@@ -7,7 +7,7 @@ import { JobOptions } from "@/system/Schedule";
 const ScheduleDefaultList: JobOptions[] = [
   {
     id: 1,
-    name: '自动分解',
+    name: '接受副本邀请',
     desc: '自动分解',
     checked: false,
     lastRunTime: null,
@@ -16,7 +16,7 @@ const ScheduleDefaultList: JobOptions[] = [
     interval: '10',
     level: '10',
     config: {
-      scheme: '自动分解',
+      scheme: '批量分解',
     }
   }
 ];

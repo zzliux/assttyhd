@@ -1,5 +1,5 @@
 import { Script } from "@/system/script";
-import { IFuncOrigin, IFuncOperatorOrigin, IFuncOperator } from "@/interface/IFunc";
+import { IFuncOrigin, IFuncOperatorOrigin, IFuncOperator, IFuncConfigOrigin } from "@/interface/IFunc";
 
 const normal = -1; //定义常量
 const left = 0;
@@ -9,6 +9,15 @@ export class Func001 implements IFuncOrigin {
 	id = 1;
 	name = '自动分解';
 	desc = '自动分解装备（优秀、精良、稀有）';
+	config: IFuncConfigOrigin[] = [{
+		desc: '配置',
+		config: [{
+			name: 'sleepAfter',
+			desc: '分解后休息时间（s）',
+			type: 'text',
+			default: '300,600'
+		}]
+	}];
 	operator: IFuncOperatorOrigin[] = [{
 		// 主界面，点击背包
 		desc: [
@@ -20,7 +29,7 @@ export class Func001 implements IFuncOrigin {
 				[right, 1128, 214, 0xfceacb],
 				[left, 288, 662, 0xffe9cf],
 				[left, 364, 666, 0xffe5c6],
-				[right, 934, 29, 0xde4538],
+				[right, 1016, 203, 0xffeb83],
 			]
 		],
 		oper: [
@@ -56,9 +65,37 @@ export class Func001 implements IFuncOrigin {
 			]
 		],
 		oper: [
-			[center, 1280, 720, 332, 594, 442, 627, 5000],
+			[center, 1280, 720, 332, 594, 442, 627, 500], // 第一次点分解，把要分解的装备点出来
+			[center, 1280, 720, 332, 594, 442, 627, 1000], // 第二次点分解执行分解
+			[center, 1280, 720, 1141, 74, 1191, 122, 500], // 关闭、关闭
+			[center, 1280, 720, 1141, 74, 1191, 122, 500],
 		]
 	}];
+	operatorFunc(thisScript: Script, thisOperator: IFuncOperator[]) : boolean {
+		let thisconf = thisScript.scheme.config['1'];
+		if (thisScript.oper({
+			id: 1,
+			name: '自动分解',
+			operator: [thisOperator[0], thisOperator[1]]
+		})) {
+			return true;
+		}
+		
+		if (thisScript.oper({
+			id: 1,
+			name: '自动分解',
+			operator: [thisOperator[2]]
+		})) {
+			const [l, r] = (thisconf.sleepAfter as string).split(',');
+			let t = parseInt(l, 10);
+			if (r) {
+				t = random(t, parseInt(r, 10));
+			}
+			thisScript.myToast(`休息${t}秒`);
+			sleep(t * 1000);
+			return true;
+		}
+	}
 }
 
 export default new Func001();

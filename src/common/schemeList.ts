@@ -8,14 +8,17 @@ const SchemeList: IScheme[] = [
     id: 1,
     schemeName: '批量分解',
     star: true,
-    list: [0, 1],
+    list: [1],
     config: {
-      '0': {
-        pause_enabled: true,
-        define_run_time: '0.5,0.5',
-        define_pause_time: '2,7'
+      '1': {
+        sleepAfter: '1800,3600',
       }
     }
+  }, {
+    id: 2,
+    schemeName: '接受副本邀请',
+    star: true,
+    list: [2],
   },
   // , {
   //     id: 101,
