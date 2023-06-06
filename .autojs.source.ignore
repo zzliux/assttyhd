@@ -1,0 +1,17 @@
+/dist/web.js
+
+/.git/
+/config/
+/docs/
+/node_modules/
+/src/
+/test/
+/.babelrc
+/.gitignore
+/jsconfig.json
+/pack.js
+/package-lock.json
+/package.json
+/README.md
+/run.js
+/tsconfig.json
